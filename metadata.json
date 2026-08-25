@@ -1,0 +1,7 @@
+{
+  "name": "Product Verification Scanner",
+  "description": "Industrial EAN barcode scanner and product verification system powered by Google Apps Script Web App API",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
