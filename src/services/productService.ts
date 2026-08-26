@@ -58,6 +58,16 @@ function parseProductFromJson(item: Record<string, unknown>, fallbackEan: string
     sarValue = String(item.sar).trim();
   }
 
+  // Extract Carton MRP directly from the API response payload
+  let cartonMrp: string | number | undefined | null = undefined;
+  if (item.cartonMrp !== undefined && item.cartonMrp !== null) {
+    cartonMrp = item.cartonMrp as string | number;
+  } else if (item.carton_mrp !== undefined && item.carton_mrp !== null) {
+    cartonMrp = item.carton_mrp as string | number;
+  } else if (item['Carton MRP'] !== undefined && item['Carton MRP'] !== null) {
+    cartonMrp = item['Carton MRP'] as string | number;
+  }
+
   return {
     id,
     model,
@@ -67,6 +77,7 @@ function parseProductFromJson(item: Record<string, unknown>, fallbackEan: string
     sku,
     price,
     sarValue, // Brand-new value directly from this API item
+    cartonMrp,
   };
 }
 

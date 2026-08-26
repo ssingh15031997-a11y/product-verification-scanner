@@ -7,6 +7,7 @@ export interface Product {
   sku: string;
   price: string | number;
   sarValue: string;
+  cartonMrp?: string | number | null;
 }
 
 export interface ApiResponse {
@@ -30,6 +31,7 @@ export interface ScanLog {
   color?: string;
   memory?: string;
   price?: string | number;
+  cartonMrp?: string | number | null;
   sarValue?: string;
 }
 

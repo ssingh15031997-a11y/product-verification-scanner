@@ -68,7 +68,13 @@ export const DuplicateEanScreen: React.FC<DuplicateEanScreenProps> = ({
                     {p.price && (
                       <>
                         <span>•</span>
-                        <span>Price: <strong className="text-slate-200">₹{p.price}</strong></span>
+                        <span>Price: <strong className="text-slate-200">₹{typeof p.price === 'number' ? p.price.toLocaleString('en-IN') : p.price}</strong></span>
+                      </>
+                    )}
+                    {p.cartonMrp && (
+                      <>
+                        <span>•</span>
+                        <span>Carton MRP: <strong className="text-slate-200">₹{typeof p.cartonMrp === 'number' ? p.cartonMrp.toLocaleString('en-IN') : p.cartonMrp}</strong></span>
                       </>
                     )}
                   </div>

@@ -141,6 +141,7 @@ export const App: React.FC = () => {
             color: freshProduct.color,
             memory: freshProduct.memory,
             price: freshProduct.price,
+            cartonMrp: freshProduct.cartonMrp,
             sarValue: freshProduct.sarValue,
           };
           setScanHistory((prev) => {

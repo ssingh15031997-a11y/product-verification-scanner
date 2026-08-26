@@ -42,6 +42,20 @@ export const ProductDetailsScreen: React.FC<ProductDetailsScreenProps> = ({
     return `₹${num.toLocaleString('en-IN')}`;
   }, [product.price]);
 
+  // Format carton MRP as Indian currency strictly from product.cartonMrp with zero fallbacks
+  const formattedCartonMrp = useMemo(() => {
+    if (product.cartonMrp === null || product.cartonMrp === undefined || product.cartonMrp === '') {
+      return 'Not Available';
+    }
+    const num = typeof product.cartonMrp === 'number' ? product.cartonMrp : parseFloat(String(product.cartonMrp).replace(/[^0-9.]/g, ''));
+    if (isNaN(num)) {
+      const trimmed = String(product.cartonMrp).trim();
+      if (!trimmed) return 'Not Available';
+      return trimmed.startsWith('₹') ? trimmed : `₹${trimmed}`;
+    }
+    return `₹${num.toLocaleString('en-IN')}`;
+  }, [product.cartonMrp]);
+
   // Dynamically parse SAR values directly from product.sarValue with zero fallbacks
   const sarBreakdown = useMemo(() => {
     const raw = (product.sarValue || '').trim();
@@ -154,12 +168,21 @@ export const ProductDetailsScreen: React.FC<ProductDetailsScreenProps> = ({
               </span>
             </div>
 
-            {/* Price Tag */}
-            <div className="flex items-center space-x-1.5 px-4 py-1.5 rounded-2xl bg-blue-600/20 border border-blue-500/30 text-blue-300">
-              <IndianRupee className="w-4 h-4" />
-              <span className="text-lg md:text-xl font-extrabold tracking-tight text-white">
-                {formattedPrice}
-              </span>
+            {/* Price and Carton MRP Tags */}
+            <div className="flex flex-col items-end gap-1.5">
+              <div className="flex items-center space-x-1.5 px-4 py-1.5 rounded-2xl bg-blue-600/20 border border-blue-500/30 text-blue-300">
+                <IndianRupee className="w-4 h-4" />
+                <span className="text-xs font-bold text-blue-300 mr-1">Price:</span>
+                <span className="text-lg md:text-xl font-extrabold tracking-tight text-white">
+                  {formattedPrice}
+                </span>
+              </div>
+              <div className="flex items-center space-x-1.5 px-3.5 py-1 rounded-xl bg-slate-800/90 border border-slate-700 text-slate-300">
+                <span className="text-xs font-semibold text-slate-400">Carton MRP:</span>
+                <span className="text-sm md:text-base font-extrabold text-emerald-300 font-mono" data-testid="carton-mrp">
+                  {formattedCartonMrp}
+                </span>
+              </div>
             </div>
           </div>
 
